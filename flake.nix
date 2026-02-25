@@ -22,7 +22,6 @@
     };
     nixvim = {
       url = "github:nix-community/nixvim/nixos-25.11";
-      inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

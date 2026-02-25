@@ -1,3 +1,4 @@
+{ self, ... }:
 {
   flake.homeModules.nixvim =
     { pkgs, ... }:
@@ -40,6 +41,15 @@
         };
 
         keymaps = [
+          {
+            mode = [ "n" ];
+            key = "<C-i>u";
+            action = ":read!uuidgen<CR>";
+            options = {
+              silent = true;
+            };
+          }
+
           {
             mode = [ "n" ];
             key = "<leader>e";
@@ -134,15 +144,24 @@
         colorschemes = {
           everforest = {
             enable = true;
+            settings = {
+              background = "hard";
+              transparent_background = 1;
+            };
+
           };
         };
 
         extraPlugins = with pkgs.vimPlugins; [
 
+          yuck-vim
           blink-pairs
         ];
 
         plugins = {
+          nvim-autopairs = {
+            enable = true;
+          };
 
           undotree = {
             enable = true;
@@ -154,6 +173,7 @@
             grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
               nix
               vim
+              yuck
             ];
             settings = {
               indent.enable = true;
@@ -241,13 +261,32 @@
               nixd = {
                 enable = true;
                 autostart = true;
-                settings = 
-                let
-                    flake = ''(builtins.getFlake("github:vyudaa/valix")'';
-                in
-                {
-                    nixpkgs.expr = "${flake}.nixosConfigurations.istari.options";
-                };
+                settings =
+                  let
+                    # The wrapper curries `_nixd-expr.nix` with the `self` and `system` args
+                    # This makes `init.lua` a bit DRYer and more readable
+                    wrapper = builtins.toFile "expr.nix" ''
+                      import ${./_nixd_expr.nix} {
+                        self = ${builtins.toJSON self};
+                        system = ${builtins.toJSON pkgs.stdenv.hostPlatform.system};
+                      }
+                    '';
+                    # withFlakes brings `local` and `global` flakes into scope, then applies `expr`
+                    withFlakes = expr: "with import ${wrapper}; " + expr;
+                  in
+                  {
+                    nixpkgs.expr = withFlakes ''
+                      import (if local ? lib.version then local else local.inputs.nixpkgs or global.inputs.nixpkgs) { }
+                    '';
+
+                    formatting.command = [ "nixfmt" ];
+                    options = {
+                      flake-parts.expr = withFlakes "local.debug.options or global.debug.options";
+                      nixos.expr = withFlakes "global.nixosConfigurations.istari.options";
+                      home-manager.expr = withFlakes "global.homeConfigurations.mithrandir.options";
+                    };
+                  };
+
               };
             };
 

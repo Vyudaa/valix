@@ -1,0 +1,13 @@
+;; PowerDash
+
+(defwindow PowerDash
+  :monitor 0
+  :stacking "fg"
+  :exclusive true
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "5%"
+                      :height "100%"
+                      :anchor "center left")
+)
+
