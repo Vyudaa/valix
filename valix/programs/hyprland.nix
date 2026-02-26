@@ -4,30 +4,60 @@
     {
       wayland.windowManager.hyprland = {
         enable = true;
+
+        submaps = {
+          resize.settings = {
+            binde = [
+              ", right, resizeactive, 10 0"
+              ", left, resizeactive, -10 0"
+              ", up, resizeactive, 0 -10"
+              ", down, resizeactive, 0 10"
+            ];
+            bind = [
+              ", ESCAPE, submap, reset"
+              ", RETURN, submap, reset"
+            ];
+          };
+          nvim.settings = {
+            bind = [
+              ", D, exec, hyprctl dispatch submap reset; ghostty --working-directory=/etc/valix/ -e nvim ."
+              ", ESCAPE, submap, reset"
+            ];
+          };
+
+        };
         settings = {
           "$mod" = "SUPER";
           "$terminal" = "ghostty";
           "$browser" = "zen-beta";
-
           "$green" = "a7c080";
 
           monitor = [
-            ",preferred, auto, auto"
+            "eDP-1,preferred, auto, auto"
+            "DP-5,preferred,auto,auto"
           ];
           workspace = [
             "special:scratchpad, gapsout:30, border:false"
+            "special:terminal, gapsout:30, border:false, on-created-empty: $terminal"
+            "special:obsidian, gapsout:30, border:false, on-created-empty: ghostty --working-directory=/home/mithrandir/vaults/Istya/ -e nvim ."
+            "1,monitor:eDP-1"
+            "2,monitor:DP-5"
+            "3,monitor:DP-5"
+            "4,monitor:DP-5"
           ];
 
           bind = [
 
             "$mod, SPACE, exec, rofi -show drun"
             "$mod, RETURN, exec, $terminal"
+            # Figure out if its possible to check whether $browser is currently running
             "$mod, B, exec, $browser"
+            "$mod, F, fullscreen, toggle"
             "$mod, Q, killactive"
             "$mod, M, exit"
-            "$mod, O, exec, obsidian"
-
             "$mod, S, togglespecialworkspace, scratchpad"
+            "$mod, T, togglespecialworkspace, terminal"
+            "$mod, O, togglespecialworkspace, obsidian"
 
             "$mod, 1, workspace, 1"
             "$mod, 2, workspace, 2"
@@ -38,6 +68,9 @@
             "$mod SHIFT, 2, movetoworkspace, 2"
             "$mod SHIFT, 3, movetoworkspace, 3"
             "$mod SHIFT, 4, movetoworkspace, 4"
+
+            "$mod, R, submap, resize"
+            "$mod, N, submap, nvim"
           ];
 
           input = {

@@ -8,11 +8,12 @@
       nixpkgs.config.allowUnfree = true;
 
       networking.hostName = "istari"; # Define your hostname.
+      networking.enableIPv6 = true;
       networking.networkmanager.enable = true;
 
       time.timeZone = "America/Chicago";
       fonts.packages = with pkgs.nerd-fonts; [
-                fira-code
+        fira-code
       ];
 
       i18n.defaultLocale = "en_US.UTF-8";

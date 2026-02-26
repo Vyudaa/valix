@@ -1,21 +1,23 @@
 { self, ... }:
 {
   flake.homeModules.nixvim =
+
     { pkgs, ... }:
     {
       programs.nixvim = {
-
         enable = true;
         defaultEditor = true;
         viAlias = true;
         vimAlias = true;
-
         clipboard = {
           register = "unnamedplus";
         };
+        diagnostic.settings = {
+          update_in_insert = true;
+        };
         globals = {
           mapleader = " ";
-          maplocalleader = " ";
+          maplocalleader = "\\";
           netrw_banner = 0;
         };
         opts = {
@@ -30,17 +32,29 @@
           inccommand = "split";
           ignorecase = true;
           smartcase = true;
+          conceallevel = 1;
           scrolloff = 8;
           cursorline = true;
+          cursorlineopt = "number";
           termguicolors = true;
           wrap = false;
           tabstop = 4;
+          softtabstop = 4;
           shiftwidth = 4;
           expandtab = true;
           autoindent = true;
         };
 
         keymaps = [
+          {
+            mode = [ "n" ];
+            key = "<C-o>n";
+            action = ":Obsidian new_from_template";
+
+            options = {
+              silent = true;
+            };
+          }
           {
             mode = [ "n" ];
             key = "<C-i>u";
@@ -146,23 +160,34 @@
             enable = true;
             settings = {
               background = "hard";
-              transparent_background = 1;
+              transparent_background = 2;
             };
 
           };
         };
 
+        #TODO: Create modules for individual plugins
         extraPlugins = with pkgs.vimPlugins; [
 
           yuck-vim
-          blink-pairs
+          blink-pairs # does not work through nixvim
         ];
 
         plugins = {
+          vimtex = {
+
+            enable = true;
+            texlivePackage = pkgs.texlive.combined.scheme-full;
+            settings = {
+              view_method = "zathura";
+            };
+          };
           nvim-autopairs = {
             enable = true;
           };
-
+          fidget = {
+            enable = true;
+          };
           undotree = {
             enable = true;
           };
@@ -181,11 +206,29 @@
             };
 
           };
+          obsidian = {
+            enable = true;
+            settings = {
+              legacy_commands = false;
+
+              templates = {
+                folder = "templates";
+              };
+
+              workspaces = [
+                {
+                  name = "Istya";
+                  path = "~/vaults/Istya";
+                }
+              ];
+            };
+          };
           fzf-lua = {
             enable = true;
             keymaps = {
               "<leader>ff" = "files";
-              "<leader>fw" = "live_grep";
+              "<leader>fw" = "grep";
+              "<leader>fg" = "global";
             };
 
           };
@@ -255,9 +298,7 @@
                     end
                   end;
             '';
-
             servers = {
-
               nixd = {
                 enable = true;
                 autostart = true;
@@ -284,9 +325,9 @@
                       flake-parts.expr = withFlakes "local.debug.options or global.debug.options";
                       nixos.expr = withFlakes "global.nixosConfigurations.istari.options";
                       home-manager.expr = withFlakes "global.homeConfigurations.mithrandir.options";
+                      nixvim.expr = withFlakes ''global.homeConfigurations.mithrandir.options.programs.nixvim.type.getSubOptions [ "programs" "nixvim"]'';
                     };
                   };
-
               };
             };
 

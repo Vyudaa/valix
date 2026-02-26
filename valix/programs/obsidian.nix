@@ -1,18 +1,21 @@
 {
-  flake.homeModules.obsidian = {
-    programs.obsidian = {
-      enable = true;
-      vaults = {
-        belogparth = {
-          enable = true;
-          target = "belogparth";
-          settings = {
-            appearance = {
-              theme = "obsidian";
+  flake.homeModules.obsidian =
+    { pkgs, ... }:
+    {
+      programs.obsidian = {
+        enable = true;
+        vaults = {
+          Ore = {
+            enable = true;
+            target = "vaults/Istya";
+            settings = {
+              appearance = {
+                theme = "obsidian";
+              };
             };
           };
+
         };
       };
     };
-  };
 }

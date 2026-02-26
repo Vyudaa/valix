@@ -13,7 +13,11 @@
           super-tiny-icons
           firefoxpwa
           jq
+          fzf
+          doxx
+          ripgrep
         ];
+
       };
     };
 

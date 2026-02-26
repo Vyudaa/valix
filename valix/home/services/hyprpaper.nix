@@ -15,6 +15,7 @@
 
           wallpaper = [
             "eDP-1,/home/mithrandir/Downloads/rivendale.jpg"
+            "DP-5,/home/mithrandir/Downloads/rivendale.jpg"
           ];
         };
       };

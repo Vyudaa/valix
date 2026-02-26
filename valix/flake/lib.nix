@@ -12,13 +12,13 @@
   };
 
   config.flake.lib = {
-        mkNixos = name: arch: {
-            ${name} = inputs.nixpkgs.lib.nixosSystem {
-                modules = [
-                    inputs.self.modules.nixos.${name}
-                    { nixpkgs.hostPlatform = lib.mkDefault arch;}
-                ];
-            };
-        };
+    mkNixos = name: arch: {
+      ${name} = inputs.nixpkgs.lib.nixosSystem {
+        modules = [
+          inputs.self.modules.nixos.${name}
+          { nixpkgs.hostPlatform = lib.mkDefault arch; }
+        ];
+      };
+    };
   };
 }

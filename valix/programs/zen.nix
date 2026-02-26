@@ -52,11 +52,31 @@
             "browser.gesture.swipe.left" = "";
             "browser.gesture.swipe.right" = "";
           };
+          keyboardShortcuts = [
+            {
+              id = "zen-workspace-forward";
+              key = "]";
+              modifiers = {
+                control = true;
+                alt = false;
+              };
+            }
+
+            {
+              id = "zen-workspace-backward";
+              key = "[";
+              modifiers = {
+                control = true;
+                alt = false;
+              };
+            }
+          ];
 
           extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
             bitwarden
             darkreader
             ublock-origin
+            refined-github
           ];
           containers = {
             study = {
@@ -82,6 +102,59 @@
               position = 1001;
               id = "5a561d74-4b49-4113-af24-10c39a56d88b";
             };
+          };
+          search = {
+            force = true;
+            default = "ddg";
+            engines = {
+              nix-packages = {
+                name = "Nix Packages";
+                urls = [
+                  {
+                    template = "https://search.nixos.org/packages";
+                    params = [
+                      {
+                        name = "type";
+                        value = "packages";
+                      }
+                      {
+                        name = "query";
+                        value = "{searchTerms}";
+                      }
+                    ];
+                  }
+                ];
+
+                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                definedAliases = [ "@np" ];
+              };
+
+              nixos-wiki = {
+                name = "NixOS Wiki";
+                urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
+                iconMapObj."16" = "https://wiki.nixos.org/favicon.ico";
+                definedAliases = [ "@nw" ];
+              };
+
+              mynixos = {
+                name = "My NixOS";
+                urls = [
+                  {
+                    template = "https://mynixos.com/search?q={searchTerms}";
+                    params = [
+                      {
+                        name = "query";
+                        value = "searchTerms";
+                      }
+                    ];
+                  }
+                ];
+
+                icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                definedAliases = [ "@nx" ]; # Keep in mind that aliases defined here only work if they start with "@"
+              };
+            };
+
           };
           pinsForce = true;
           pins = {

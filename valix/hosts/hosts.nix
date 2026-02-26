@@ -19,6 +19,7 @@ in
           mithrandir
           ghostty
           nixvim
+          tmux
           git
 
           #Applications
