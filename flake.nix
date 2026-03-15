@@ -5,6 +5,11 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
+    # nix-darwin = {
+    #   url = "github:nix-darwin/nix-darwin-25.11";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    #
     disko = {
       url = "github:nix-community/disko/latest";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,10 +24,6 @@
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
-    };
-    nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.11";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     firefox-addons = {

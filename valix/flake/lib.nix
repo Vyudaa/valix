@@ -20,5 +20,9 @@
         ];
       };
     };
+    mkDarwin = name: arch: {
+      ${name} = inputs.nix-darwin.lib.darwinSystems {
+      };
+    };
   };
 }

@@ -21,7 +21,17 @@
         font = "Lat2-Terminus16";
         keyMap = "us";
       };
+      hardware.bluetooth.enable = true;
 
+      security.rtkit.enable = true;
+      services.pipewire = {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+        wireplumber.enable = true;
+        jack.enable = true;
+      };
       programs.zsh.enable = true;
 
       users.users.mithrandir = {
@@ -54,7 +64,6 @@
       };
 
       nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-
       system.stateVersion = "25.11"; # Did you read the comment?
 
     };

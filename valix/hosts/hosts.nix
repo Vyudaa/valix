@@ -14,22 +14,21 @@ in
         };
         modules = with self.homeModules; [
           inputs.zen-browser.homeModules.beta
-          inputs.nixvim.homeModules.nixvim
           zsh
           mithrandir
           ghostty
-          nixvim
           tmux
           git
+          nvim
 
           #Applications
           zen
           obsidian
 
           #Desktop Env
-          eww
-          zathura
           rofi
+          eww # TODO: configure this
+          zathura
           hyprland
           hyprpaper
         ];

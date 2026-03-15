@@ -1,0 +1,8 @@
+require("plugins.fzf")
+require("plugins.treesitter")
+require("plugins.blink-cmp")
+require("plugins.everforest")
+require("plugins.todo-comments")
+require("plugins.conform")
+require("plugins.snacks")
+require("plugins.autopairs")

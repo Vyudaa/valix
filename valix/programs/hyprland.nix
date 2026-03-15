@@ -1,3 +1,6 @@
+# TODO:
+#   - [ ] If only one window default to fullscreen,
+
 {
   flake.homeModules.hyprland =
     { pkgs, ... }:
@@ -31,7 +34,6 @@
           "$terminal" = "ghostty";
           "$browser" = "zen-beta";
           "$green" = "a7c080";
-
           monitor = [
             "eDP-1,preferred, auto, auto"
             "DP-5,preferred,auto,auto"
@@ -48,7 +50,8 @@
 
           bind = [
 
-            "$mod, SPACE, exec, rofi -show drun"
+            "$mod, P, workspace, previous"
+
             "$mod, RETURN, exec, $terminal"
             # Figure out if its possible to check whether $browser is currently running
             "$mod, B, exec, $browser"
@@ -58,6 +61,7 @@
             "$mod, S, togglespecialworkspace, scratchpad"
             "$mod, T, togglespecialworkspace, terminal"
             "$mod, O, togglespecialworkspace, obsidian"
+            "$mod, SPACE, exec, rofi -show drun"
 
             "$mod, 1, workspace, 1"
             "$mod, 2, workspace, 2"
@@ -71,6 +75,12 @@
 
             "$mod, R, submap, resize"
             "$mod, N, submap, nvim"
+            ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+            ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+            ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+            ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+            ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
+            ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
           ];
 
           input = {

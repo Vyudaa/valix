@@ -4,17 +4,25 @@
     {
       programs.obsidian = {
         enable = true;
+        defaultSettings = {
+          appearance = {
+            theme = "obsidian";
+            cssTheme = "Everforest";
+          };
+          corePlugins = [
+            "backlink"
+            "graph"
+            "daily-notes"
+            "command-palette"
+            "templates"
+
+          ];
+        };
         vaults = {
-          Ore = {
+          Istya = {
             enable = true;
             target = "vaults/Istya";
-            settings = {
-              appearance = {
-                theme = "obsidian";
-              };
-            };
           };
-
         };
       };
     };

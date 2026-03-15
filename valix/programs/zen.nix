@@ -41,6 +41,45 @@
             "d8b79d4a-6cba-4495-9ff6-d6d30b0e94fe" # Better Active Tab
 
           ];
+          userChrome = ''
+
+
+
+                :root {
+                    --zen-colors-primary: #1e2326 !important; /* Background */
+                    --zen-primary-color: #a7c080 !important; /* Primary */
+                    --zen-colors-secondary: #2b3339 !important; /* Secondary */
+                    --zen-colors-tertiary: #272e33 !important; /* Tertiary */
+                    --zen-colors-border: #3c4841 !important; /* Border */
+                    --toolbarbutton-icon-fill: #d3c6aa !important; /* Icon Fill */
+                    --lwt-text-color: #d3c6aa !important; /* Text Color */
+                    --toolbar-field-color: #d3c6aa !important; /* Field Color */
+                    --tab-selected-textcolor: rgb(167, 192, 128) !important; /* Selected Tab Text Color */
+                    --toolbar-field-focus-color: #d3c6aa !important; /* Focus Field Color */
+                    --toolbar-color: #d3c6aa !important; /* Toolbar Color */
+                    --newtab-text-primary-color: #d3c6aa !important; /* New Tab Text Primary Color */
+                    --arrowpanel-color: #d3c6aa !important; /* Arrow Panel Color */
+                    --arrowpanel-background: #2e383c !important; /* Arrow Panel Background */
+                    --sidebar-text-color: #d3c6aa !important; /* Sidebar Text Color */
+                    --lwt-sidebar-text-color: #d3c6aa !important; /* Sidebar Text Color (LWT) */
+                    --lwt-sidebar-background-color: #272e33 !important; /* Sidebar Background (LWT) */
+                    --toolbar-bgcolor: #2b3339 !important; /* Toolbar Background Color */
+                    --newtab-background-color: #1e2326 !important; /* New Tab Background Color */
+                    --zen-themed-toolbar-bg: #1e2326 !important; /* Themed Toolbar Background */
+                }
+
+                .toolbarbutton-1[open="true"] .toolbarbutton-icon {
+                    fill: #4c566a !important; /* Dark foreground color from Everforest */
+                }
+                
+                #permissions-granted-icon {
+                    fill : var(--zen-themed-toolbar-bg) !important;
+                }
+                
+                #zen-workspaces-button {
+                    background-color: var(--zen-colors-primary) !important;
+                }
+          '';
 
           settings = {
             "browser.search.region" = "US";
@@ -48,6 +87,7 @@
             "distribution.searchplugins.defaultLocale" = "en-US";
             "general.useragent.locale" = "en-US";
 
+            "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             # Disable swipe gestures
             "browser.gesture.swipe.left" = "";
             "browser.gesture.swipe.right" = "";
